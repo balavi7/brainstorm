@@ -1,9 +1,9 @@
-name: Deploy to VPS
+name: Deploy WordPress
 
 on:
   push:
     branches:
-      - main
+      - main  
 
 jobs:
   deploy:
@@ -13,25 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Node.js and NPM
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-
-      - name: Install project dependencies
-        run: npm install  # Adjust this command based on your project's build process
-
-      - name: Build project
-        run: npm run build  # Adjust this command based on your project's build process
-
-      - name: Set up SSH agent
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Install rsync
-        run: sudo apt-get install -y rsync
-
-      - name: Deploy to VPS
+      - name: Deploy to Ubuntu
         run: |
-          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ ubuntu@ec2-15-207-115-79:/var/www/html
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_rsa
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} 'bash -s' < deploy-script.sh
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
