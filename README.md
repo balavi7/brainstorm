@@ -74,4 +74,4 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          ssh ubuntu@15.207.115.79 'bash -s' < /home/ubuntu/deploy-script.sh
+          ssh ubuntu@13.232.182.110 'bash -s' < /home/ubuntu/deploy-script.sh
