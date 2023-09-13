@@ -75,3 +75,11 @@ jobs:
       - name: Deploy to Server
         run: |
           ssh ubuntu@13.232.182.110 'bash -s' < /home/ubuntu/deploy-script.sh
+```
+
+
+
+### Deployed Website URL: https://automation.myftp.org/
+### Wordpress admin: https://automation.myftp.org/wp-admin/
+
+### The username and password of wp-admin has been shared in the documentation
